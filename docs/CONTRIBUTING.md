@@ -92,14 +92,6 @@ MongoDB Compass is a GUI tool for visualizing and analyzing your database schema
 
 ## Set Up Metabase
 
-Credentials
-```
-Email: admin@summerbodybot.com
-Password: password67
-```
-
-
-
 # Development Workflow
 
 ## Start MongoDB container
