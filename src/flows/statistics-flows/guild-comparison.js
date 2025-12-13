@@ -27,7 +27,7 @@ guildComparisonScene.enter(async (ctx) => {
 
     message += '*Average / Total points*\n'
     sortedByAverage.forEach(guild => {
-      const text = `\(${parseFloat(guild.total.average).toFixed(1)}/${parseFloat(guild.total.total).toFixed(1)}\)`
+      const text = `(${parseFloat(guild.total.average).toFixed(1)}/${parseFloat(guild.total.total).toFixed(1)})`
       message += formatList(guild.guild, text, titlePadding, valuePadding) + '\n'
     })
 
