@@ -16,7 +16,7 @@ SummerBodyBot is a Telegram bot designed to track and record competition scores 
 - **Telegraf** - Telegram bot framework
 - **MongoDB** - Database
 - **Mongoose** - ODM for MongoDB
-- **Docker** - Containerization (optional)
+- **Docker** - Containerization
 - **Metabase** - Analytics and dashboard
 
 ## Quick Start
