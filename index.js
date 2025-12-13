@@ -1,5 +1,5 @@
 const { connectDatabase, disconnectDatabase } = require('./src/database')
-const bot = require('./src/bot')
+const { bot, setupBotCommands } = require('./src/bot')
 const scheduleReminders = require('./src/utils/schedule-reminders')
 
 async function handleError(error) {
@@ -20,6 +20,7 @@ async function handleError(error) {
 async function startBot() {
   try {
     await connectDatabase()
+    await setupBotCommands()
     scheduleReminders()
     console.log('Bot started')
     await bot.launch()

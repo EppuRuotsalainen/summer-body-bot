@@ -28,4 +28,16 @@ bot.catch((err, ctx) => {
   ctx.reply(texts.actions.error.error)
 })
 
-module.exports = bot
+// Setup bot commands for the menu
+const setupBotCommands = async () => {
+  const commands = commandScenes
+    .filter(({ description }) => description)
+    .map(({ command, description }) => ({
+      command,
+      description
+    }))
+
+  await bot.telegram.setMyCommands(commands)
+}
+
+module.exports = {bot, setupBotCommands}
