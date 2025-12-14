@@ -36,10 +36,39 @@ bun start                   # Start the bot
 bun run populate            # Add test data
 bun run clear               # Remove test data
 bun test                    # Run tests
+bun test:watch              # Run tests in watch mode
+bun test:coverage           # Run tests with coverage report
 bun run pod:start           # Start the Podman pod
 bun run pod:remove          # Remove the Podman pod
 bun run pod:populate        # Add test data to the pod
 bun run pod:clear           # Remove test data from the pod
+```
+
+## Testing
+
+This project uses [Bun's native test framework](https://bun.sh/docs/test/). Tests are located in the `tests/` directory and mirror the structure of `src/`.
+
+### Running Tests
+
+```bash
+bun test                    # Run all tests
+bun test tests/utils        # Run tests in a specific directory
+bun test:watch              # Run tests in watch mode for development
+```
+
+### Writing Tests
+
+We use Bun's `test` module which is Jest-compatible. Example:
+
+```typescript
+import { describe, expect, test } from "bun:test";
+import { myFunction } from "../src/utils/my-function";
+
+describe("myFunction", () => {
+  test("should return true", () => {
+    expect(myFunction()).toBe(true);
+  });
+});
 ```
 ## Project Structure
 ```
