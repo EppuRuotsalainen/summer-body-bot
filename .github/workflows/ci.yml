@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install Podman
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install podman
+      
+      - name: Build container
+        run: podman build -t summerbodybot:test .
+      
+      - name: Run linter
+        run: podman run --rm summerbodybot:test bun run lint
+      
+      - name: Run tests
+        run: podman run --rm summerbodybot:test bun test
+      
+      - name: Run tests with coverage
+        run: podman run --rm summerbodybot:test bun test:coverage
