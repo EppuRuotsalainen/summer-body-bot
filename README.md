@@ -38,8 +38,8 @@ bun run clear               # Remove test data
 bun test                    # Run tests
 bun test:watch              # Run tests in watch mode
 bun test:coverage           # Run tests with coverage report
-bun run pod:start           # Start the Podman pod
-bun run pod:remove          # Remove the Podman pod
+bun run pod:up              # Start the Podman pod
+bun run pod:down            # Remove the Podman pod
 bun run pod:populate        # Add test data to the pod
 bun run pod:clear           # Remove test data from the pod
 ```
