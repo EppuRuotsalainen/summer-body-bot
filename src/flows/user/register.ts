@@ -1,8 +1,8 @@
 import { Scenes, Markup } from 'telegraf'
-import * as userService from '../services/user-service'
-import texts from '../utils/texts'
-import User from '../models/user-model'
-import { isNotCallback } from '../utils/flow-helpers'
+import * as userService from '../../services/user-service'
+import texts from '../../utils/texts'
+import { isNotCallback } from '../../utils/flow-helpers'
+import User from '../../models/user-model'
 
 export const registerWizard = new Scenes.WizardScene(
   'register_wizard',

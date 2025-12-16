@@ -1,8 +1,8 @@
 import { Scenes, Markup } from 'telegraf'
-import * as teamService from '../services/team-service'
-import * as userService from '../services/user-service'
-import texts from '../utils/texts'
-import validateTeamName from '../utils/validate-team-name'
+import * as teamService from '../../services/team-service'
+import * as userService from '../../services/user-service'
+import validateTeamName from '../../utils/validate-team-name'
+import texts from '../../utils/texts'
 
 const cancelAndExitKeyboard = Markup.inlineKeyboard([
   Markup.button.callback('Cancel', 'cancel')

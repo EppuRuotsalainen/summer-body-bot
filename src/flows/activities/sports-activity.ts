@@ -1,8 +1,8 @@
 import { Scenes, Markup } from 'telegraf'
-import * as pointService from '../services/point-service'
-import * as userService from '../services/user-service'
-import { kmActivities, otherActivities } from '../config/multipliers'
-import { isNotCallback } from '../utils/flow-helpers'
+import { isNotCallback } from '../../utils/flow-helpers'
+import { kmActivities, otherActivities } from '../../config/multipliers'
+import * as pointService from '../../services/point-service'
+import * as userService from '../../services/user-service'
 
 export const sportsActivityWizard = new Scenes.WizardScene(
   'sports_activity_wizard',

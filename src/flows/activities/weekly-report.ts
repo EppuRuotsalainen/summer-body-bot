@@ -1,13 +1,11 @@
 import { Scenes, Markup } from 'telegraf'
-
-import * as pointService from '../services/point-service'
-import * as userService from '../services/user-service'
-
-import texts from '../utils/texts'
-import canAddPoints from '../utils/can-add-points'
-import { formatList } from '../utils/format-list'
-import { PointMultipliers, DefaultPoints } from '../config/multipliers'
-import { isNotCallback } from '../utils/flow-helpers'
+import * as pointService from '../../services/point-service'
+import * as userService from '../../services/user-service'
+import { DefaultPoints, PointMultipliers } from '../../config/multipliers'
+import { isNotCallback } from '../../utils/flow-helpers'
+import { formatList } from '../../utils/format-list'
+import texts from '../../utils/texts'
+import canAddPoints from '../../utils/can-add-points'
 
 const healthQuestions = [
   { key: 'goodSleep', label: 'Good Sleep', points: PointMultipliers.goodSleep },
