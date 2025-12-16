@@ -1,6 +1,35 @@
-node_modules/
+# Environment variables
 .env
-docker-compose.yml
-*.txt
-*.pdf
+
+# Dependencies
+node_modules/
+
+# Python
+venv/
+
+# IDEs and Editors
+.vscode/
+.idea/
+
+# Docker & Container files
 *.deb
+
+# Build outputs
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Notes and temporary files
+notes/
+*.tmp
+*.temp
+TODO.md
+
+# Database files
+*.db
+
+# Test coverage
+coverage/

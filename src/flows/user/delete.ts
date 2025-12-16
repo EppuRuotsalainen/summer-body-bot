@@ -1,8 +1,8 @@
 import { Scenes, Markup } from 'telegraf'
-import * as userService from '../services/user-service'
-import * as teamService from '../services/team-service'
-import texts from '../utils/texts'
-import { isNotCallback } from '../utils/flow-helpers'
+import * as userService from '../../services/user-service'
+import * as teamService from '../../services/team-service'
+import { isNotCallback } from '../../utils/flow-helpers'
+import texts from '../../utils/texts'
 
 export const deleteUserWizard = new Scenes.WizardScene(
   'delete_user_wizard',

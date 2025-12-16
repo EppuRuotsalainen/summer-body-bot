@@ -1,9 +1,9 @@
 import { Scenes, Markup } from 'telegraf'
-import * as pointService from '../services/point-service'
-import User from '../models/user-model'
-import { adminIds } from '../config/constants'
-import { PointMultipliers, kmActivities, otherActivities } from '../config/multipliers'
-import { isNotCallback } from '../utils/flow-helpers'
+import User from '../../models/user-model'
+import { adminIds } from '../../config'
+import { isNotCallback } from '../../utils/flow-helpers'
+import { kmActivities, otherActivities, PointMultipliers } from '../../config/multipliers'
+import * as pointService from '../../services/point-service'  // <-- Add this line
 
 export const adjustPointsWizard = new Scenes.WizardScene(
   'adjust_points_wizard',
