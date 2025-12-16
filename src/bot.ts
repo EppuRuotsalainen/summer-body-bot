@@ -14,10 +14,13 @@ if (!telegramToken) {
 
 const agent = new https.Agent({ keepAlive: false })
 export const bot = new Telegraf<MyContext>(telegramToken, { telegram: { agent } })
-
 const stage = new Scenes.Stage<MyContext>(Object.values(flows) as any[])
+
 bot.use(session())
 bot.use(stage.middleware())
+
+// Start command - show welcome wizard which then goes to menu
+bot.start(onlyPrivate, (ctx: any) => ctx.scene.enter('start_wizard'))
 
 // Register all commands
 commandScenes.forEach(({ command, scene, private: isPrivate }: any) => {
@@ -27,6 +30,22 @@ commandScenes.forEach(({ command, scene, private: isPrivate }: any) => {
     bot.command(command, (ctx: any) => ctx.scene.enter(scene))
   }
 })
+
+// Global handler for "Back to Menu" button
+bot.hears('« Back to Menu', onlyPrivate, (ctx: any) => ctx.scene.enter('menu_scene'))
+
+// Global handler for "❌ Cancel" button - leaves current scene and goes to menu
+bot.hears('❌ Cancel', onlyPrivate, async (ctx: any) => {
+  await ctx.reply('Action cancelled.')
+  await ctx.scene.enter('menu_scene')
+})
+
+// Global handlers for menu category buttons
+bot.hears('👤 Profile', onlyPrivate, (ctx: any) => ctx.scene.enter('menu_scene'))
+bot.hears('💪 Activities', onlyPrivate, (ctx: any) => ctx.scene.enter('menu_scene'))
+bot.hears('📊 Statistics', onlyPrivate, (ctx: any) => ctx.scene.enter('menu_scene'))
+bot.hears('👥 Teams', onlyPrivate, (ctx: any) => ctx.scene.enter('menu_scene'))
+bot.hears('ℹ️ Information', onlyPrivate, (ctx: any) => ctx.scene.enter('menu_scene'))
 
 bot.catch((err: any, ctx: any) => {
   console.error(`Encountered an error for ${ctx.updateType}`, err)
@@ -39,12 +58,15 @@ bot.catch((err: any, ctx: any) => {
 
 // Setup bot commands for the menu
 export const setupBotCommands = async () => {
-  const commands = commandScenes
-    .filter(({ description }: any) => description)
-    .map(({ command, description }: any) => ({
-      command,
-      description
-    }))
-
-  await bot.telegram.setMyCommands(commands)
+  // Show start and menu commands in Telegram's menu button popup
+  await bot.telegram.setMyCommands([
+    { command: 'start', description: '🚀 Start bot' },
+    { command: 'menu', description: '📋 Open main menu' }
+  ])
+  
+  await bot.telegram.setChatMenuButton({
+    menuButton: {
+      type: 'commands'
+    }
+  })
 }

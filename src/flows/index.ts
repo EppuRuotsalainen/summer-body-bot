@@ -1,6 +1,7 @@
 // Information flows
 export { startWizard } from './info/start'
 export { helpScene } from './info/help'
+export { menuScene } from './info/menu'
 export { statsInfoScene } from './info/stats-info'
 export { termsScene } from './info/terms'
 export { howToGetPoints } from './info/how-to-points'
