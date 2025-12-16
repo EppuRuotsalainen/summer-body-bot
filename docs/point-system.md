@@ -37,3 +37,13 @@ Cap weekly activity points at 100 to prevent overtraining?
   - Signing up for a race/competition +5 points
 - Separate leadersboards so that beginners can win too?
   - **Groups** for leaderboards inside individual friend groups
+
+# UX for point registering
+
+- The main challenge is what is the best way for the user to choose from the 1000 activities listed in the dataset. Here are two possible solutions and the production solutions will likely be a combination of both.
+  - Hierarchical category navigation
+    - The user will use an inline keyboard to browse different activities
+    - The activities can be sorted into a tree-like structure (already exists in dataset)
+  - Fuzzy text search 
+    - The user can search activities with a search bar. Then the fuzzy search will find the best matching activities to the search query.
+  - 
