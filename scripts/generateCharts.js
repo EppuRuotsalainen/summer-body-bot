@@ -2,9 +2,9 @@
     const { D3Node } = await import('d3-node')
     const fs = require('fs')
     const mongoose = require('mongoose')
-    const config = require('./config')
-    const User = require('./models/user-model')
-    const pointService = require('./services/point-service')
+    const config = require('../config')
+    const User = require('../models/user-model')
+    const pointService = require('../services/point-service')
 
     function generateTestDataForCombinedChart(guilds, startDate, numDays) {
       const data = []
@@ -77,7 +77,7 @@
         },
         { $addFields: { 
              avgPoints: { $divide: [ "$totalPoints", "$count" ] },
-             initialTotal: "$totalPoints"  // Added field for initial total points
+             initialTotal: "$totalPoints" 
         } }
       ])
     
@@ -565,8 +565,6 @@
         .domain([0, d3.max(data, d => d.participants)])
         .range([0, width])
         .nice()
-        
-      console.log(d3.max(data, d => d.average))
 
       const y = d3.scaleLinear()
         .domain([0, 155])
@@ -635,12 +633,75 @@
       console.log("Scatter Plot generated at: guildScatterPlot.svg")
     }
 
+    async function generateGuildPieChart() {
+      try {
+        const guildTotals = await pointService.getGuildsTotals();
+        guildTotals.sort((a, b) => b.total.total - a.total.total);
+        const topGuilds = guildTotals.slice(0, 10);
+        const pieData = topGuilds.map(d => ({ guild: d.guild, points: d.total.total }));
+        const outerWidth = 500, outerHeight = 500;
+        const margin = { top: 40, right: 20, bottom: 20, left: 20 };
+        const width = outerWidth - margin.left - margin.right;
+        const height = outerHeight - margin.top - margin.bottom;
+        const radius = Math.min(width, height) / 2;
+        const d3n = new D3Node();
+        const d3 = d3n.d3;
+        const svg = d3n.createSVG(outerWidth, outerHeight);
+        svg.append("text")
+          .attr("x", outerWidth / 2)
+          .attr("y", margin.top / 2)
+          .attr("text-anchor", "middle")
+          .attr("fill", "black")
+          .style("font-size", "18px")
+          .style("font-weight", "bold")
+          .text("Score Distribution of Top 10 Guilds");
+        const chartGroup = svg.append("g")
+          .attr("transform", `translate(${outerWidth / 2}, ${(outerHeight + margin.top) / 2})`);
+        const color = d3.scaleOrdinal(d3.schemeCategory10)
+          .domain(pieData.map(d => d.guild));
+        const pie = d3.pie()
+          .sort(null)
+          .value(d => d.points);
+        const data_ready = pie(pieData);
+        const arc = d3.arc()
+          .innerRadius(0)
+          .outerRadius(radius);
+        chartGroup.selectAll('path')
+          .data(data_ready)
+          .enter()
+          .append('path')
+          .attr('d', arc)
+          .attr('fill', d => color(d.data.guild))
+          .attr("stroke", "white")
+          .style("stroke-width", "2px");
+        const labelArc = d3.arc()
+          .outerRadius(radius - 40)
+          .innerRadius(radius - 40);
+        chartGroup.selectAll('text')
+          .data(data_ready)
+          .enter()
+          .append('text')
+          .attr("transform", d => `translate(${labelArc.centroid(d)})`)
+          .attr("dy", "0.35em")
+          .attr("fill", "white")
+          .style("font-size", "12px")
+          .text(d => d.data.guild);
+        const fs = require('fs');
+        const svgString = d3n.svgString();
+        fs.writeFileSync("guildPieChart.svg", svgString);
+        console.log("Guild Pie Chart generated at: guildPieChart.svg");
+      } catch (error) {
+        console.error("Error generating Guild Pie Chart:", error);
+      }
+    }
+
     async function generateGuildCharts() {
       const aggregatedData = await getDailyAveragePointsByGuild()
       await generateCombinedGuildAverageChart(aggregatedData)
       await generateCombinedGuildTotalPointsChart(aggregatedData)
       await generateHistogramsForAllGuilds()
       await generateGuildScatterPlot()
+      await generateGuildPieChart()
     }
 
     if (process.argv.includes('--test')) {

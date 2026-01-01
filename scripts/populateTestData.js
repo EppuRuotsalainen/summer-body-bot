@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
-const User = require('./models/user-model')
-const Team = require('./models/team-model')
-const { mongodbUri } = require('./config')
-const pointService = require('./services/point-service')
+const User = require('../models/user-model')
+const Team = require('../models/team-model')
+const { mongodbUri } = require('../config')
+const pointService = require('../services/point-service')
 
-const teamService = require('./services/team-service')
-const userService = require('./services/user-service')
+const teamService = require('../services/team-service')
+const userService = require('../services/user-service')
 
 async function populateData() {
   try {

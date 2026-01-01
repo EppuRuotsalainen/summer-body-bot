@@ -3,31 +3,31 @@ const SVGtoPDF = require('svg-to-pdfkit')
 const fs = require('fs')
 const path = require('path')
 const mongoose = require('mongoose')
-const config = require('./config')
-const User = require('./models/user-model')
-const Team = require('./models/team-model')
-const pointService = require('./services/point-service')
+const config = require('../config')
+const User = require('../models/user-model')
+const Team = require('../models/team-model')
+const pointService = require('../services/point-service')
 
 const guildLogos = {
-  TiK: path.join(__dirname, 'logos', 'tik_logo.png'),
-  PT: path.join(__dirname, 'logos', 'pt_logo.png'),
-  IK: path.join(__dirname, 'logos', 'ik_logo.png'),
-  FK: path.join(__dirname, 'logos', 'fk_logo.png'),
-  MK: path.join(__dirname, 'logos', 'mk_logo.png'),
-  KIK: path.join(__dirname, 'logos', 'kik_logo.png'),
-  SIK: path.join(__dirname, 'logos', 'sik_logo.png'),
-  Inkubio: path.join(__dirname, 'logos', 'inkubio_logo.png'),
-  DG: path.join(__dirname, 'logos', 'dg_logo.png'),
-  AS: path.join(__dirname, 'logos', 'as_logo.png'),
-  Prodeko: path.join(__dirname, 'logos', 'prodeko_logo.png'),
-  Athene: path.join(__dirname, 'logos', 'athene_logo.png'),
-  KY: path.join(__dirname, 'logos', 'ky_logo.png'),
-  TOKYO: path.join(__dirname, 'logos', 'tokyo_logo.png'),
-  AK: path.join(__dirname, 'logos', 'ak_logo.png'),
-  TF: path.join(__dirname, 'logos', 'tf_logo.png'),
-  PJK: path.join(__dirname, 'logos', 'pjk_logo.png'),
-  VK: path.join(__dirname, 'logos', 'vk_logo.png'),
-  KK: path.join(__dirname, 'logos', 'kk_logo.png'),
+  TiK: path.join(__dirname, '../logos', 'tik_logo.png'),
+  PT: path.join(__dirname, '../logos', 'pt_logo.png'),
+  IK: path.join(__dirname, '../logos', 'ik_logo.png'),
+  FK: path.join(__dirname, '../logos', 'fk_logo.png'),
+  MK: path.join(__dirname, '../logos', 'mk_logo.png'),
+  KIK: path.join(__dirname, '../logos', 'kik_logo.png'),
+  SIK: path.join(__dirname, '../logos', 'sik_logo.png'),
+  Inkubio: path.join(__dirname, '../logos', 'inkubio_logo.png'),
+  DG: path.join(__dirname, '../logos', 'dg_logo.png'),
+  AS: path.join(__dirname, '../logos', 'as_logo.png'),
+  Prodeko: path.join(__dirname, '../logos', 'prodeko_logo.png'),
+  Athene: path.join(__dirname, '../logos', 'athene_logo.png'),
+  KY: path.join(__dirname, '../logos', 'ky_logo.png'),
+  TOKYO: path.join(__dirname, '../logos', 'tokyo_logo.png'),
+  AK: path.join(__dirname, '../logos', 'ak_logo.png'),
+  TF: path.join(__dirname, '../logos', 'tf_logo.png'),
+  PJK: path.join(__dirname, '../logos', 'pjk_logo.png'),
+  VK: path.join(__dirname, '../logos', 'vk_logo.png'),
+  KK: path.join(__dirname, '../logos', 'kk_logo.png'),
 }
 
 async function getTopUsersForGuild(guild, limit = 5) {
@@ -349,8 +349,12 @@ async function generateLandscapePdf() {
   svgString = fs.readFileSync('guildScatterPlot.svg', 'utf8')
   await SVGtoPDF(doc, svgString, 30, 30, { width: 1042, height: 745 })
 
-  doc.end()
+  doc.addPage({ layout: 'landscape', size: 'A4', margin: 30 })
 
+  svgString = fs.readFileSync('guildPieChart.svg', 'utf8')
+  await SVGtoPDF(doc, svgString, 30, 30, { width: 1042, height: 745 })
+
+  doc.end()
   await new Promise((resolve, reject) => {
     stream.on('finish', resolve)
     stream.on('error', reject)
@@ -417,6 +421,11 @@ async function generateChartPdf() {
   doc.addPage({ layout: 'landscape', size: 'A4', margin: 30 })
 
   svgString = fs.readFileSync('guildScatterPlot.svg', 'utf8')
+  await SVGtoPDF(doc, svgString, 30, 30, { width: 1042, height: 745 })
+
+  doc.addPage({ layout: 'landscape', size: 'A4', margin: 30 })
+
+  svgString = fs.readFileSync('guildPieChart.svg', 'utf8')
   await SVGtoPDF(doc, svgString, 30, 30, { width: 1042, height: 745 })
 
   doc.end()

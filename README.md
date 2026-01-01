@@ -83,9 +83,10 @@ node generateCharts.js
 │       ├── team-rankings.js         # Team rankings sorted by average points per member
 │       ├── top-users.js             # Top 15 participants by total points
 │       └── user-summary.js          # Personal points summary for a user
-├── populateTestData.js              # Script to generate sample data for testing
-├── generateCharts.js                # Script to generate SVG charts of competition statistics
-├── generateStatsPDF.js              # Script to produce PDF reports of competition statistics
+├── scripts                          # Scripts for data population and statistics generation
+│   ├── populateTestData.js          # Script to generate sample data for testing
+│   ├── generateCharts.js            # Script to generate SVG charts of competition statistics
+│   └── generateStatsPDF.js          # Script to produce PDF reports of competition statistics
 ├── models                           # Mongoose models defining the data schema
 │   ├── team-model.js                # Team schema and methods for point aggregation
 │   └── user-model.js                # User schema including points, team, and guild information
